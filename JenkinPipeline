@@ -1,0 +1,29 @@
+node {
+   
+    
+     stage('checkoutcode'){checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '57b2e3e1-5b5c-4d36-904e-e74a43e2570b', url: 'https://github.com/Sowmyashree96/nodejs-app-mss.git']])
+                          }
+     stage('Build'){
+         nodejs(nodeJSInstallationName: 'NodeJS')
+     { sh "npm install" }
+                   }
+                   
+    stage ('Sonarreport'){
+    nodejs(nodeJSInstallationName: 'NodeJS')    
+   // { sh "npm run sonar" }  
+      { sh "node sonar-project.js"}
+                         }
+
+    //stage ('UploadtoNexus'){
+   // nodejs(nodeJSInstallationName: 'NodeJS')
+    //{ sh "npm publish"}
+    //                        }  
+    
+     stage ('runtheapplication'){
+        nodejs(nodeJSInstallationName: 'NodeJS')
+        { sh "npm start &"}
+                                }
+     
+    
+     
+    }
